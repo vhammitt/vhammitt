@@ -1,8 +1,8 @@
 /* ----------------------------------------
 Code exported from SAS Enterprise Guide
-DATE: Friday, January 09, 2015     TIME: 10:21:09 AM
-PROJECT: HammittV_SAS_project_01.08.15
-PROJECT PATH: P:\QAC\qac200\students\vhammitt\Assignments\HammittV_SAS_project_01.08.15.egp
+DATE: Friday, January 09, 2015     TIME: 3:32:23 PM
+PROJECT: HammittV_SAS_project_01.09.15
+PROJECT PATH: P:\QAC\qac200\students\vhammitt\Assignments\HammittV_SAS_project_01.09.15.egp
 ---------------------------------------- */
 
 /* Library assignment for Local.MYDATA */
@@ -212,6 +212,32 @@ Libname MYDATA V9 'P:\QAC\qac200\students\vhammitt' ;
   %end;
 %mend;
 
+/* save the current settings of XPIXELS and YPIXELS */
+/* so that they can be restored later               */
+%macro _sas_pushchartsize(new_xsize, new_ysize);
+	%global _savedxpixels _savedypixels;
+	options nonotes;
+	proc sql noprint;
+	select setting into :_savedxpixels
+	from sashelp.vgopt
+	where optname eq "XPIXELS";
+	select setting into :_savedypixels
+	from sashelp.vgopt
+	where optname eq "YPIXELS";
+	quit;
+	options notes;
+	GOPTIONS XPIXELS=&new_xsize YPIXELS=&new_ysize;
+%mend;
+
+/* restore the previous values for XPIXELS and YPIXELS */
+%macro _sas_popchartsize;
+	%if %symexist(_savedxpixels) %then %do;
+		GOPTIONS XPIXELS=&_savedxpixels YPIXELS=&_savedypixels;
+		%symdel _savedxpixels / nowarn;
+		%symdel _savedypixels / nowarn;
+	%end;
+%mend;
+
 /* ---------------------------------- */
 /* MACRO: enterpriseguide             */
 /* PURPOSE: define a macro variable   */
@@ -268,32 +294,6 @@ Libname MYDATA V9 'P:\QAC\qac200\students\vhammitt' ;
 
 %enterpriseguide
 
-/* save the current settings of XPIXELS and YPIXELS */
-/* so that they can be restored later               */
-%macro _sas_pushchartsize(new_xsize, new_ysize);
-	%global _savedxpixels _savedypixels;
-	options nonotes;
-	proc sql noprint;
-	select setting into :_savedxpixels
-	from sashelp.vgopt
-	where optname eq "XPIXELS";
-	select setting into :_savedypixels
-	from sashelp.vgopt
-	where optname eq "YPIXELS";
-	quit;
-	options notes;
-	GOPTIONS XPIXELS=&new_xsize YPIXELS=&new_ysize;
-%mend;
-
-/* restore the previous values for XPIXELS and YPIXELS */
-%macro _sas_popchartsize;
-	%if %symexist(_savedxpixels) %then %do;
-		GOPTIONS XPIXELS=&_savedxpixels YPIXELS=&_savedypixels;
-		%symdel _savedxpixels / nowarn;
-		%symdel _savedypixels / nowarn;
-	%end;
-%mend;
-
 ODS PROCTITLE;
 OPTIONS DEV=ACTIVEX;
 GOPTIONS XPIXELS=0 YPIXELS=0;
@@ -310,8 +310,8 @@ ODS tagsets.sasreport13(ID=EGSRX) FILE=EGSRX
 
 /*   START OF NODE: Assign Project Library (MYDATA)   */
 %LET _CLIENTTASKLABEL='Assign Project Library (MYDATA)';
-%LET _CLIENTPROJECTPATH='P:\QAC\qac200\students\vhammitt\Assignments\HammittV_SAS_project_01.08.15.egp';
-%LET _CLIENTPROJECTNAME='HammittV_SAS_project_01.08.15.egp';
+%LET _CLIENTPROJECTPATH='P:\QAC\qac200\students\vhammitt\Assignments\HammittV_SAS_project_01.09.15.egp';
+%LET _CLIENTPROJECTNAME='HammittV_SAS_project_01.09.15.egp';
 
 GOPTIONS ACCESSIBLE;
 LIBNAME MYDATA  "P:\QAC\qac200\students\vhammitt" ;
@@ -324,8 +324,8 @@ GOPTIONS NOACCESSIBLE;
 
 /*   START OF NODE: Variables1 FilAdult   */
 %LET _CLIENTTASKLABEL='Variables1 FilAdult';
-%LET _CLIENTPROJECTPATH='P:\QAC\qac200\students\vhammitt\Assignments\HammittV_SAS_project_01.08.15.egp';
-%LET _CLIENTPROJECTNAME='HammittV_SAS_project_01.08.15.egp';
+%LET _CLIENTPROJECTPATH='P:\QAC\qac200\students\vhammitt\Assignments\HammittV_SAS_project_01.09.15.egp';
+%LET _CLIENTPROJECTNAME='HammittV_SAS_project_01.09.15.egp';
 
 GOPTIONS ACCESSIBLE;
 %_eg_conditional_dropds(MYDATA.MEPS_FULLYR_2012_FILTER);
@@ -442,8 +442,8 @@ GOPTIONS NOACCESSIBLE;
 /*   START OF NODE: Code For Data Set Attributes of Variables1 FilAdult   */
 %LET SYSLAST=MYDATA.MEPS_FULLYR_2012_FILTER;
 %LET _CLIENTTASKLABEL='Code For Data Set Attributes of Variables1 FilAdult';
-%LET _CLIENTPROJECTPATH='P:\QAC\qac200\students\vhammitt\Assignments\HammittV_SAS_project_01.08.15.egp';
-%LET _CLIENTPROJECTNAME='HammittV_SAS_project_01.08.15.egp';
+%LET _CLIENTPROJECTPATH='P:\QAC\qac200\students\vhammitt\Assignments\HammittV_SAS_project_01.09.15.egp';
+%LET _CLIENTPROJECTNAME='HammittV_SAS_project_01.09.15.egp';
 %LET _SASPROGRAMFILE='P:\QAC\qac200\students\vhammitt\Code For Data Set Attributes of Variables1 FilAdult.sas';
 
 GOPTIONS ACCESSIBLE;
@@ -482,14 +482,14 @@ GOPTIONS NOACCESSIBLE;
 
 /*   START OF NODE: One-Way Frequencies for MEPS Adult Subset   */
 %LET _CLIENTTASKLABEL='One-Way Frequencies for MEPS Adult Subset';
-%LET _CLIENTPROJECTPATH='P:\QAC\qac200\students\vhammitt\Assignments\HammittV_SAS_project_01.08.15.egp';
-%LET _CLIENTPROJECTNAME='HammittV_SAS_project_01.08.15.egp';
+%LET _CLIENTPROJECTPATH='P:\QAC\qac200\students\vhammitt\Assignments\HammittV_SAS_project_01.09.15.egp';
+%LET _CLIENTPROJECTNAME='HammittV_SAS_project_01.09.15.egp';
 
 GOPTIONS ACCESSIBLE;
 /* -------------------------------------------------------------------
    Code generated by SAS Task
 
-   Generated on: Friday, January 09, 2015 at 10:20:43 AM
+   Generated on: Friday, January 09, 2015 at 3:31:49 PM
    By task: One-Way Frequencies for MEPS Adult Subset
 
    Input Data: Local:MYDATA.MEPS_FULLYR_2012_FILTER
@@ -632,8 +632,8 @@ GOPTIONS NOACCESSIBLE;
 
 /*   START OF NODE: Recode Missing Variable   */
 %LET _CLIENTTASKLABEL='Recode Missing Variable';
-%LET _CLIENTPROJECTPATH='P:\QAC\qac200\students\vhammitt\Assignments\HammittV_SAS_project_01.08.15.egp';
-%LET _CLIENTPROJECTNAME='HammittV_SAS_project_01.08.15.egp';
+%LET _CLIENTPROJECTPATH='P:\QAC\qac200\students\vhammitt\Assignments\HammittV_SAS_project_01.09.15.egp';
+%LET _CLIENTPROJECTNAME='HammittV_SAS_project_01.09.15.egp';
 
 GOPTIONS ACCESSIBLE;
 %_eg_conditional_dropds(MYDATA.MEPS_FULLYR_2012_FILTER_MANAGED);
@@ -866,7 +866,7 @@ PROC SQL;
                WHEN -1 = t1.ADPAIN42 THEN .
                WHEN -9 = t1.ADPAIN42 THEN .
                ELSE t1.ADPAIN42
-            END) LABEL="SAQ 4WKS: pain limits normal work" AS PAIN_LIM_WRK, 
+            END) LABEL="SAQ 4WKS: pain limits normal work (recoded missing)" AS PAIN_LIM_WRK, 
           /* ACC_LESS_PHYS */
             (CASE 
                WHEN -1 = t1.ADPALS42 THEN .
@@ -905,7 +905,13 @@ PROC SQL;
                WHEN -1 = t1.ADSPEC42 THEN .
                WHEN -9 = t1.ADSPEC42 THEN .
                ELSE t1.ADSPEC42
-            END) LABEL="SAQ: needed to see specialist (recoded missing)" AS SPEC
+            END) LABEL="SAQ: needed to see specialist (recoded missing)" AS SPEC, 
+          /* HLTH_STP_SOC */
+            (CASE 
+               WHEN -1 = t1.ADSOCA42 THEN .
+               WHEN -9 = t1.ADSOCA42 THEN .
+               ELSE t1.ADSOCA42
+            END) LABEL="SAQ 4WKS: health stopped social activity (recoded missing)" AS HLTH_STP_SOC
       FROM MYDATA.MEPS_FULLYR_2012_FILTER t1;
 QUIT;
 
@@ -919,14 +925,14 @@ GOPTIONS NOACCESSIBLE;
 
 /*   START OF NODE: Table Analysis   */
 %LET _CLIENTTASKLABEL='Table Analysis';
-%LET _CLIENTPROJECTPATH='P:\QAC\qac200\students\vhammitt\Assignments\HammittV_SAS_project_01.08.15.egp';
-%LET _CLIENTPROJECTNAME='HammittV_SAS_project_01.08.15.egp';
+%LET _CLIENTPROJECTPATH='P:\QAC\qac200\students\vhammitt\Assignments\HammittV_SAS_project_01.09.15.egp';
+%LET _CLIENTPROJECTNAME='HammittV_SAS_project_01.09.15.egp';
 
 GOPTIONS ACCESSIBLE;
 /* -------------------------------------------------------------------
    Code generated by SAS Task
 
-   Generated on: Friday, January 09, 2015 at 10:20:44 AM
+   Generated on: Friday, January 09, 2015 at 3:31:50 PM
    By task: Table Analysis
 
    Input Data: Local:MYDATA.MEPS_FULLYR_2012_FILTER_MANAGED
@@ -1006,10 +1012,517 @@ GOPTIONS NOACCESSIBLE;
 %LET _CLIENTPROJECTNAME=;
 
 
+/*   START OF NODE: Reverse coding   */
+%LET _CLIENTTASKLABEL='Reverse coding';
+%LET _CLIENTPROJECTPATH='P:\QAC\qac200\students\vhammitt\Assignments\HammittV_SAS_project_01.09.15.egp';
+%LET _CLIENTPROJECTNAME='HammittV_SAS_project_01.09.15.egp';
+
+GOPTIONS ACCESSIBLE;
+%_eg_conditional_dropds(MYDATA.SUBSET_REVERSE);
+
+PROC SQL;
+   CREATE TABLE MYDATA.SUBSET_REVERSE(label="SUBSET_REVERSE") AS 
+   SELECT t1.DUPERSID, 
+          t1.AGE12X, 
+          t1.SEX, 
+          t1.REGION12, 
+          t1.RACETHX, 
+          t1.MARRY12X, 
+          t1.EDRECODE, 
+          t1.EMPST31, 
+          t1.EMPST42, 
+          t1.EMPST53, 
+          t1.EDUCYR, 
+          t1.ADAPPT42, 
+          t1.ADCAPE42, 
+          t1.ADCLIM42, 
+          t1.ADCMPD42, 
+          t1.ADCMPM42, 
+          t1.ADCMPY42, 
+          t1.ADDAYA42, 
+          t1.ADDOWN42, 
+          t1.ADDPRS42, 
+          t1.ADDRBP42, 
+          t1.ADEFRT42, 
+          t1.ADEGMC42, 
+          t1.ADEXPL42, 
+          t1.ADEZUN42, 
+          t1.ADFFRM42, 
+          t1.ADFHLP42, 
+          t1.ADGENH42, 
+          t1.ADHECR42, 
+          t1.ADHOPE42, 
+          t1.ADILCR42, 
+          t1.ADILWW42, 
+          t1.ADINSA42, 
+          t1.ADINSB42, 
+          t1.ADINST42, 
+          t1.ADINTR42, 
+          t1.ADLANG42, 
+          t1.ADLIST42, 
+          t1.ADMALS42, 
+          t1.ADMWLM42, 
+          t1.ADNDCR42, 
+          t1.ADNERV42, 
+          t1.ADNRGY42, 
+          t1.ADNSMK42, 
+          t1.ADOVER42, 
+          t1.ADPAIN42, 
+          t1.ADPALS42, 
+          t1.ADPRTM42, 
+          t1.ADPRX42, 
+          t1.ADPWLM42, 
+          t1.ADRESP42, 
+          t1.ADREST42, 
+          t1.ADRISK42, 
+          t1.ADRTCR42, 
+          t1.ADRTWW42, 
+          t1.ADSAD42, 
+          t1.ADSMOK42, 
+          t1.ADSOCA42, 
+          t1.ADSPEC42, 
+          t1.ADSPRF42, 
+          t1.ADTLHW42, 
+          t1.ADWRTH42, 
+          t1.K6SUM42, 
+          t1.MCS42, 
+          t1.PCS42, 
+          t1.PHQ242, 
+          t1.SFFLAG42, 
+          t1.AMASST12, 
+          t1.AMCHIR12, 
+          t1.AMDRC12, 
+          t1.AMNURS12, 
+          t1.AMTHER12, 
+          t1.HHTOTD12, 
+          t1.IPDIS12, 
+          t1.IPNGTD12, 
+          t1.IPZERO12, 
+          t1.CHLDP12X, 
+          t1.DEPDNT12, 
+          t1.DIVDP12X, 
+          t1.FAMINC12, 
+          t1.FAMS1231, 
+          t1.ERTOT12, 
+          t1.INSURC12, 
+          t1.PRIEU12, 
+          t1.PRING12, 
+          t1.PRIOG12, 
+          t1.PRIS12, 
+          t1.PRIV12, 
+          t1.PUB12X, 
+          t1.TOTEXP12, 
+          t1.TOTMCD12, 
+          t1.TOTMCR12, 
+          t1.TOTOTH12, 
+          t1.TOTPRV12, 
+          t1.TOTSLF12, 
+          t1.PERWT12F, 
+          t1.EDU, 
+          t1.EMPLY31, 
+          t1.EMPLY42, 
+          t1.EMPLY53, 
+          t1.MED_OFF_VIS, 
+          t1.CALM_PE_4, 
+          t1.STAIRS, 
+          t1.HLTH_LIM_MOD_AC, 
+          t1.DOWN, 
+          t1.EZ_MED_CARE, 
+          t1.GEN_HEALTH, 
+          t1.HEALTH_RATE, 
+          t1.IMMED_CARE, 
+          t1.NO_NEED_INS, 
+          t1.ACC_LESS_MNTL, 
+          t1.WRK_LIM_MNTL, 
+          t1.LOT_NRGY, 
+          t1.OVER_NO_HELP, 
+          t1.PAIN_LIM_WRK, 
+          t1.ACC_LESS_PHYS, 
+          t1.WRK_LIM_PHYS, 
+          t1.RISK, 
+          t1.ROUT_CARE, 
+          t1.SMOKE, 
+          t1.SPEC, 
+          t1.HLTH_STP_SOC, 
+          /* HLTH_LIM_MOD_ACC_R */
+            (4-t1.HLTH_LIM_MOD_AC) LABEL="SAQ: health limits moderate activites (recoded missing)(reverse coded)" AS 
+            HLTH_LIM_MOD_ACC_R, 
+          /* STAIRS_R */
+            (4-t1.STAIRS) LABEL="SAQ: health limits climbing stairs (recoded missing)(reverse coded)" AS STAIRS_R, 
+          /* ACC_LESS_PHYS_R */
+            (6-t1.ACC_LESS_PHYS) LABEL=
+            "SAQ 4WKS: accomplish less because of physical problems (recoded missing)(reverse coded)" AS ACC_LESS_PHYS_R, 
+          /* WRK_LIM_PHYS_R */
+            (6-t1.WRK_LIM_PHYS) LABEL=
+            "SAQ 4WKS: work limited because of physicall problems (recoded missing)(reverse coded)" AS WRK_LIM_PHYS_R, 
+          /* ACC_LESS_MNTL_R */
+            (6-t1.ACC_LESS_MNTL) LABEL=
+            "SAQ 4WKS: accomplish less because of mental problems (recoded missing) (reverse coded)" AS ACC_LESS_MNTL_R, 
+          /* WRK_LIM_MNTL_R */
+            (6-t1.WRK_LIM_MNTL) LABEL=
+            "SAQ 4WKS: work limited because of mental problems (recoded missing)(reverse coded)" AS WRK_LIM_MNTL_R, 
+          /* DOWN_R */
+            (6-t1.DOWN) LABEL="SAQ 4WKS: felt downhearted or depressed (recoded missing)(reverse coded)" AS DOWN_R, 
+          /* HLTH_STP_SOC_R */
+            (6-t1.HLTH_STP_SOC) LABEL="SAQ 4WKS: health stopped social activites (recoded missing)(reverse coded)" AS 
+            HLTH_STP_SOC_R
+      FROM MYDATA.MEPS_FULLYR_2012_FILTER_MANAGED t1;
+QUIT;
+
+GOPTIONS NOACCESSIBLE;
+
+
+%LET _CLIENTTASKLABEL=;
+%LET _CLIENTPROJECTPATH=;
+%LET _CLIENTPROJECTNAME=;
+
+
+/*   START OF NODE: Sum   */
+%LET _CLIENTTASKLABEL='Sum';
+%LET _CLIENTPROJECTPATH='P:\QAC\qac200\students\vhammitt\Assignments\HammittV_SAS_project_01.09.15.egp';
+%LET _CLIENTPROJECTNAME='HammittV_SAS_project_01.09.15.egp';
+
+GOPTIONS ACCESSIBLE;
+%_eg_conditional_dropds(MYDATA."Aggregate Health Score"n);
+
+PROC SQL;
+   CREATE TABLE MYDATA."Aggregate Health Score"n(label="Aggregate Health Score") AS 
+   SELECT t1.DUPERSID, 
+          t1.AGE12X, 
+          t1.SEX, 
+          t1.REGION12, 
+          t1.RACETHX, 
+          t1.MARRY12X, 
+          t1.EDRECODE, 
+          t1.EMPST31, 
+          t1.EMPST42, 
+          t1.EMPST53, 
+          t1.EDUCYR, 
+          t1.ADAPPT42, 
+          t1.ADCAPE42, 
+          t1.ADCLIM42, 
+          t1.ADCMPD42, 
+          t1.ADCMPM42, 
+          t1.ADCMPY42, 
+          t1.ADDAYA42, 
+          t1.ADDOWN42, 
+          t1.ADDPRS42, 
+          t1.ADDRBP42, 
+          t1.ADEFRT42, 
+          t1.ADEGMC42, 
+          t1.ADEXPL42, 
+          t1.ADEZUN42, 
+          t1.ADFFRM42, 
+          t1.ADFHLP42, 
+          t1.ADGENH42, 
+          t1.ADHECR42, 
+          t1.ADHOPE42, 
+          t1.ADILCR42, 
+          t1.ADILWW42, 
+          t1.ADINSA42, 
+          t1.ADINSB42, 
+          t1.ADINST42, 
+          t1.ADINTR42, 
+          t1.ADLANG42, 
+          t1.ADLIST42, 
+          t1.ADMALS42, 
+          t1.ADMWLM42, 
+          t1.ADNDCR42, 
+          t1.ADNERV42, 
+          t1.ADNRGY42, 
+          t1.ADNSMK42, 
+          t1.ADOVER42, 
+          t1.ADPAIN42, 
+          t1.ADPALS42, 
+          t1.ADPRTM42, 
+          t1.ADPRX42, 
+          t1.ADPWLM42, 
+          t1.ADRESP42, 
+          t1.ADREST42, 
+          t1.ADRISK42, 
+          t1.ADRTCR42, 
+          t1.ADRTWW42, 
+          t1.ADSAD42, 
+          t1.ADSMOK42, 
+          t1.ADSOCA42, 
+          t1.ADSPEC42, 
+          t1.ADSPRF42, 
+          t1.ADTLHW42, 
+          t1.ADWRTH42, 
+          t1.K6SUM42, 
+          t1.MCS42, 
+          t1.PCS42, 
+          t1.PHQ242, 
+          t1.SFFLAG42, 
+          t1.AMASST12, 
+          t1.AMCHIR12, 
+          t1.AMDRC12, 
+          t1.AMNURS12, 
+          t1.AMTHER12, 
+          t1.HHTOTD12, 
+          t1.IPDIS12, 
+          t1.IPNGTD12, 
+          t1.IPZERO12, 
+          t1.CHLDP12X, 
+          t1.DEPDNT12, 
+          t1.DIVDP12X, 
+          t1.FAMINC12, 
+          t1.FAMS1231, 
+          t1.ERTOT12, 
+          t1.INSURC12, 
+          t1.PRIEU12, 
+          t1.PRING12, 
+          t1.PRIOG12, 
+          t1.PRIS12, 
+          t1.PRIV12, 
+          t1.PUB12X, 
+          t1.TOTEXP12, 
+          t1.TOTMCD12, 
+          t1.TOTMCR12, 
+          t1.TOTOTH12, 
+          t1.TOTPRV12, 
+          t1.TOTSLF12, 
+          t1.PERWT12F, 
+          t1.EDU, 
+          t1.EMPLY31, 
+          t1.EMPLY42, 
+          t1.EMPLY53, 
+          t1.MED_OFF_VIS, 
+          t1.CALM_PE_4, 
+          t1.STAIRS, 
+          t1.HLTH_LIM_MOD_AC, 
+          t1.DOWN, 
+          t1.EZ_MED_CARE, 
+          t1.GEN_HEALTH, 
+          t1.HEALTH_RATE, 
+          t1.IMMED_CARE, 
+          t1.NO_NEED_INS, 
+          t1.ACC_LESS_MNTL, 
+          t1.WRK_LIM_MNTL, 
+          t1.LOT_NRGY, 
+          t1.OVER_NO_HELP, 
+          t1.PAIN_LIM_WRK, 
+          t1.ACC_LESS_PHYS, 
+          t1.WRK_LIM_PHYS, 
+          t1.RISK, 
+          t1.ROUT_CARE, 
+          t1.SMOKE, 
+          t1.SPEC, 
+          t1.HLTH_STP_SOC, 
+          t1.HLTH_LIM_MOD_ACC_R, 
+          t1.STAIRS_R, 
+          t1.ACC_LESS_PHYS_R, 
+          t1.WRK_LIM_PHYS_R, 
+          t1.ACC_LESS_MNTL_R, 
+          t1.WRK_LIM_MNTL_R, 
+          t1.DOWN_R, 
+          t1.HLTH_STP_SOC_R, 
+          /* AGG_HLTH_SCORE */
+            
+            (SUM(t1.CALM_PE_4,t1.GEN_HEALTH,t1.LOT_NRGY,t1.PAIN_LIM_WRK,t1.HLTH_LIM_MOD_ACC_R,t1.STAIRS_R,t1.ACC_LESS_PHYS_R,t1.WRK_LIM_PHYS_R,t1.ACC_LESS_MNTL_R,t1.WRK_LIM_MNTL_R,t1.DOWN_R,t1.HLTH_STP_SOC_R)) 
+            LABEL="Aggregate health score by sum of SF12 after reverse coding and recode missing" AS AGG_HLTH_SCORE
+      FROM MYDATA.SUBSET_REVERSE t1;
+QUIT;
+
+GOPTIONS NOACCESSIBLE;
+
+
+%LET _CLIENTTASKLABEL=;
+%LET _CLIENTPROJECTPATH=;
+%LET _CLIENTPROJECTNAME=;
+
+
+/*   START OF NODE: List Data   */
+%LET _CLIENTTASKLABEL='List Data';
+%LET _CLIENTPROJECTPATH='P:\QAC\qac200\students\vhammitt\Assignments\HammittV_SAS_project_01.09.15.egp';
+%LET _CLIENTPROJECTNAME='HammittV_SAS_project_01.09.15.egp';
+
+GOPTIONS ACCESSIBLE;
+/* -------------------------------------------------------------------
+   Code generated by SAS Task
+
+   Generated on: Friday, January 09, 2015 at 3:31:50 PM
+   By task: List Data
+
+   Input Data: Local:MYDATA.AGGREGATE HEALTH SCORE
+   Server:  Local
+   ------------------------------------------------------------------- */
+
+%_eg_conditional_dropds(WORK.SORTTempTableSorted);
+/* -------------------------------------------------------------------
+   Sort data set Local:MYDATA.AGGREGATE HEALTH SCORE
+   ------------------------------------------------------------------- */
+
+PROC SQL;
+	CREATE VIEW WORK.SORTTempTableSorted AS
+		SELECT T.HLTH_LIM_MOD_ACC_R, T.STAIRS_R, T.ACC_LESS_PHYS_R, T.WRK_LIM_PHYS_R, T.ACC_LESS_MNTL_R, T.WRK_LIM_MNTL_R, T.DOWN_R, T.HLTH_STP_SOC_R, T.CALM_PE_4, T.GEN_HEALTH, T.LOT_NRGY, T.PAIN_LIM_WRK, T.AGG_HLTH_SCORE
+	FROM MYDATA.'AGGREGATE HEALTH SCORE'n as T
+;
+QUIT;
+TITLE;
+TITLE1 "Check Aggregate Variable Coding";
+FOOTNOTE;
+FOOTNOTE1 "Generated by the SAS System (&_SASSERVERNAME, &SYSSCPL) on %TRIM(%QSYSFUNC(DATE(), NLDATE20.)) at %TRIM(%SYSFUNC(TIME(), TIMEAMPM12.))";
+
+PROC PRINT DATA=WORK.SORTTempTableSorted
+	(OBS=50)
+	OBS="Row number"
+	LABEL
+	;
+	VAR HLTH_LIM_MOD_ACC_R STAIRS_R ACC_LESS_PHYS_R WRK_LIM_PHYS_R ACC_LESS_MNTL_R WRK_LIM_MNTL_R DOWN_R HLTH_STP_SOC_R CALM_PE_4 GEN_HEALTH LOT_NRGY PAIN_LIM_WRK AGG_HLTH_SCORE;
+RUN;
+/* -------------------------------------------------------------------
+   End of task code.
+   ------------------------------------------------------------------- */
+RUN; QUIT;
+%_eg_conditional_dropds(WORK.SORTTempTableSorted);
+TITLE; FOOTNOTE;
+
+
+GOPTIONS NOACCESSIBLE;
+%LET _CLIENTTASKLABEL=;
+%LET _CLIENTPROJECTPATH=;
+%LET _CLIENTPROJECTNAME=;
+
+
+/*   START OF NODE: Summary Statistics for Aggregate Health Score   */
+%LET _CLIENTTASKLABEL='Summary Statistics for Aggregate Health Score';
+%LET _CLIENTPROJECTPATH='P:\QAC\qac200\students\vhammitt\Assignments\HammittV_SAS_project_01.09.15.egp';
+%LET _CLIENTPROJECTNAME='HammittV_SAS_project_01.09.15.egp';
+
+GOPTIONS ACCESSIBLE;
+/* -------------------------------------------------------------------
+   Code generated by SAS Task
+
+   Generated on: Friday, January 09, 2015 at 3:31:50 PM
+   By task: Summary Statistics for Aggregate Health Score
+
+   Input Data: Local:MYDATA.AGGREGATE HEALTH SCORE
+   Server:  Local
+   ------------------------------------------------------------------- */
+
+%_eg_conditional_dropds(WORK.SORTTempTableSorted);
+/* -------------------------------------------------------------------
+   Sort data set Local:MYDATA.AGGREGATE HEALTH SCORE
+   ------------------------------------------------------------------- */
+
+PROC SQL;
+	CREATE VIEW WORK.SORTTempTableSorted AS
+		SELECT T.AGG_HLTH_SCORE
+	FROM MYDATA.'AGGREGATE HEALTH SCORE'n(FIRSTOBS=1 ) as T
+;
+QUIT;
+/* -------------------------------------------------------------------
+   Run the Means Procedure
+   ------------------------------------------------------------------- */
+TITLE;
+TITLE1 "Summary Statistics";
+TITLE2 "Results for Aggregate Health Score SF-12 MEPS Adults";
+FOOTNOTE;
+FOOTNOTE1 "Generated by the SAS System (&_SASSERVERNAME, &SYSSCPL) on %TRIM(%QSYSFUNC(DATE(), NLDATE20.)) at %TRIM(%SYSFUNC(TIME(), TIMEAMPM12.)) by Victoria Hammitt";
+PROC MEANS DATA=WORK.SORTTempTableSorted
+	FW=12
+	PRINTALLTYPES
+	CHARTYPE
+	QMETHOD=OS
+	VARDEF=DF 	
+		MEAN 
+		STD 
+		MODE NONOBS 	
+		Q1 
+		MEDIAN 
+		Q3	;
+	VAR AGG_HLTH_SCORE;
+
+RUN;
+/* -------------------------------------------------------------------
+   End of task code.
+   ------------------------------------------------------------------- */
+RUN; QUIT;
+%_eg_conditional_dropds(WORK.SORTTempTableSorted);
+TITLE; FOOTNOTE;
+
+
+GOPTIONS NOACCESSIBLE;
+%LET _CLIENTTASKLABEL=;
+%LET _CLIENTPROJECTPATH=;
+%LET _CLIENTPROJECTNAME=;
+
+
+/*   START OF NODE: Distribution Analysis for Aggregate Health Score   */
+%LET _CLIENTTASKLABEL='Distribution Analysis for Aggregate Health Score';
+%LET _CLIENTPROJECTPATH='P:\QAC\qac200\students\vhammitt\Assignments\HammittV_SAS_project_01.09.15.egp';
+%LET _CLIENTPROJECTNAME='HammittV_SAS_project_01.09.15.egp';
+
+GOPTIONS ACCESSIBLE;
+/* -------------------------------------------------------------------
+   Code generated by SAS Task
+
+   Generated on: Friday, January 09, 2015 at 3:31:51 PM
+   By task: Distribution Analysis for Aggregate Health Score
+
+   Input Data: Local:MYDATA.AGGREGATE HEALTH SCORE
+   Server:  Local
+   ------------------------------------------------------------------- */
+
+%_eg_conditional_dropds(WORK.SORTTempTableSorted);
+/* -------------------------------------------------------------------
+   PROC SHEWHART does not support DEVICE=ACTIVEX. Switching to PNG.
+   ------------------------------------------------------------------- */
+OPTIONS DEV=PNG;
+ODS GRAPHICS ON;
+/* -------------------------------------------------------------------
+   Sort data set Local:MYDATA.AGGREGATE HEALTH SCORE
+   ------------------------------------------------------------------- */
+
+PROC SQL;
+	CREATE VIEW WORK.SORTTempTableSorted AS
+		SELECT T.AGG_HLTH_SCORE
+	FROM MYDATA.'AGGREGATE HEALTH SCORE'n as T
+;
+QUIT;
+TITLE;
+TITLE1 "Distribution analysis of Aggregate Health Score";
+FOOTNOTE;
+FOOTNOTE1 "Generated by the SAS System (&_SASSERVERNAME, &SYSSCPL) on %TRIM(%QSYSFUNC(DATE(), NLDATE20.)) at %TRIM(%SYSFUNC(TIME(), TIMEAMPM12.)) by Victoria Hammitt";
+	ODS EXCLUDE EXTREMEOBS MODES MOMENTS QUANTILES;
+	
+	GOPTIONS htext=1 cells;
+	SYMBOL v=SQUARE c=BLUE h=1 cells;
+	PATTERN v=SOLID
+	;
+PROC UNIVARIATE DATA = WORK.SORTTempTableSorted
+		CIBASIC(TYPE=TWOSIDED ALPHA=0.05)
+		MU0=0
+;
+	VAR AGG_HLTH_SCORE;
+	HISTOGRAM   AGG_HLTH_SCORE / NORMAL	( 	W=1 	L=1 	COLOR=YELLOW  MU=EST SIGMA=EST)
+	
+		CFRAME=GRAY CAXES=BLACK WAXIS=1  CBARLINE=BLACK CFILL=BLUE PFILL=SOLID ;
+	;
+/* -------------------------------------------------------------------
+   End of task code.
+   ------------------------------------------------------------------- */
+RUN; QUIT;
+%_eg_conditional_dropds(WORK.SORTTempTableSorted);
+TITLE; FOOTNOTE;
+/* -------------------------------------------------------------------
+   Restoring original device type setting.
+   ------------------------------------------------------------------- */
+OPTIONS DEV=ACTIVEX;
+ODS GRAPHICS OFF;
+
+
+GOPTIONS NOACCESSIBLE;
+%LET _CLIENTTASKLABEL=;
+%LET _CLIENTPROJECTPATH=;
+%LET _CLIENTPROJECTNAME=;
+
+
 /*   START OF NODE: Initial Data Set Attributes   */
 %LET _CLIENTTASKLABEL='Initial Data Set Attributes';
-%LET _CLIENTPROJECTPATH='P:\QAC\qac200\students\vhammitt\Assignments\HammittV_SAS_project_01.08.15.egp';
-%LET _CLIENTPROJECTNAME='HammittV_SAS_project_01.08.15.egp';
+%LET _CLIENTPROJECTPATH='P:\QAC\qac200\students\vhammitt\Assignments\HammittV_SAS_project_01.09.15.egp';
+%LET _CLIENTPROJECTNAME='HammittV_SAS_project_01.09.15.egp';
 
 GOPTIONS ACCESSIBLE;
 LIBNAME ECLIB000 "P:\QAC\qac200\Data\MEPS";
@@ -1017,7 +1530,7 @@ LIBNAME ECLIB000 "P:\QAC\qac200\Data\MEPS";
 /* -------------------------------------------------------------------
    Code generated by SAS Task
 
-   Generated on: Friday, January 09, 2015 at 10:20:49 AM
+   Generated on: Friday, January 09, 2015 at 3:31:53 PM
    By task: Initial Data Set Attributes
 
    Input Data: P:\QAC\qac200\Data\MEPS\meps_fullyr_2012.sas7bdat
